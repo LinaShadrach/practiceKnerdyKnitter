@@ -1,0 +1,177 @@
+var base = ["111", "110", "101", "100", "011", "010", "001", "000"];
+    var rules = [];
+    var count;
+    var power = 128;
+    function getRule(rule, count, power) {
+        if (power == 0) {
+            return rule;
+        }
+        if (power > 0) {
+            if ((count - power) >= 0) {
+                rule.push("1");
+                count = count - power;
+            }
+            else {
+                rule.push("0");
+            }
+            if (power == 1) {
+                power = 0;
+            }
+            power = power / 2;
+            return getRule(rule, count, power);
+        }
+    }
+    function getAllRules() {
+        for (var i = 0; i < 256; i++) {
+            count = i;
+            var rule = [];
+            rule = getRule(rule, count, power);
+            rules.push(rule.join(""));
+        }
+    }
+    getAllRules();
+
+    function getNextRow(rule, cells) {
+        var nextRow = [];
+        for (var i = 0; i < cells.length; i++) {
+            var key = "";
+            if (i == "0") {
+                key = key + "0";
+            }
+            else {
+
+                key = key + cells[i - 1].toString();
+                console.log("1st else" + key);
+            }
+            key = key + cells[i].toString();
+            if (i == (cells.length - 1).toString()) {
+                key = key + "0";
+            }
+            else {
+                key = key + cells[i + 1].toString();
+            }
+            var keyIndex = base.indexOf(key);
+            nextRow.push(rule[keyIndex]);
+        }
+        return nextRow;
+    }
+
+
+    var count = 20;
+    var scarf = [];
+    function rows(count, row) {
+        if (count > 0) {
+            scarf.push(row);
+            rows(count - 1, getNextRow(rules[30], row));
+        }
+    }
+    rows(20, ["1", "1", "0", "1", "1", "1", "1"]);
+    console.log(scarf);
+
+
+    //var getRules = function(rule, index, start){
+    //    if (index > rule.length) {
+    //        if (rule[start] == 1)
+    //        {
+    //            start++;
+    //            index = start;
+    //            getRules(rule, index, start);
+    //        }
+    //    }
+    //    if(index <=8){
+    //        rules.push(rule);
+    //        rule[index] = 1;
+    //        index++;
+    //        getRules(rule, index, start);
+    //    }
+    //}
+    //for (var count = 0; count < 0; count++)
+    //{
+    //    for (var i = count; i < 8; i++) {
+    //        for (var j = i; j < 8; j++) {
+    //            rule[j] = 1;
+    //            rules.push(rule);
+    //        }
+    //    }
+    //}
+
+
+
+
+	**************from jsfiddle****************
+	var base = ["111", "110", "101", "100", "011", "010", "001", "000"];
+    var rules = [];
+    var count;
+    var power = 128;
+    function getRule(rule, count, power) {
+        if (power == 0) {
+            return rule;
+        }
+        if (power > 0) {
+            if ((count - power) >= 0) {
+                rule.push("1");
+                count = count - power;
+            }
+            else {
+                rule.push("0");
+            }
+            if (power == 1) {
+                power = 0;
+            }
+            power = power / 2;
+            return getRule(rule, count, power);
+        }
+    }
+    function getAllRules() {
+        for (var i = 0; i < 256; i++) {
+            count = i;
+            var rule = [];
+            rule = getRule(rule, count, power);
+            rules.push(rule.join(""));
+        }
+    }
+    console.log(rules);
+    getAllRules();
+
+    function getNextRow(rule, cells) {
+        var nextRow = [];
+        for (var i = 0; i < cells.length; i++) {
+            var key="";
+            if(i == "0")
+            {
+                key = key + "0";
+                 console.log("1st if"+key);
+            }
+            else {
+
+                key = key + cells[i-1].toString();
+                console.log("1st else"+key);
+            }
+            key = key + cells[i].toString();
+            if (i == (cells.length - 1).toString()) {
+                key = key + "0";
+                console.log("2nd if"+key);
+            }
+            else {
+                key = key + cells[i + 1].toString();
+                        	console.log("2nd else"+key);
+            }
+            var keyIndex = base.indexOf(key);
+            console.log(key);
+            console.log(keyIndex);
+            nextRow.push(rule[keyIndex]);
+        }
+        return nextRow;
+    }
+   
+
+    var count = 20;
+    var scarf = [];
+    function rows(count, row){
+    	if(count>0){
+      	scarf.push(row);
+        rows(count-1, getNextRow(rules[30], row));
+      }
+    }
+    rows(20, ["1","1","0","1","1","1","1"]);
+    console.log(scarf);
